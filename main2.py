@@ -1,8 +1,8 @@
 import random
 import tkinter as tk
 
-WIDTH = 20
-HEIGHT = 40
+WIDTH = 10
+HEIGHT = 20
 SQUARE_SIZE = 30
 DELAY = 500
 
@@ -31,6 +31,9 @@ class TetrisGame:
         self.level_label = tk.Label(master, text="Level: 1")
         self.level_label.pack()
 
+        self.restart_button = tk.Button(master, text="Spróbuj ponownie", command=self.start_game)
+        self.restart_button.pack()
+
         self.score = 0
         self.level = 1
         self.board = [[0] * WIDTH for _ in range(HEIGHT)]
@@ -45,8 +48,8 @@ class TetrisGame:
         self.master.bind("<Up>", self.rotate_shape)
 
         self.start_game()
-
     def start_game(self):
+        self.canvas.delete("game_over")  # Usuwa napis "Game Over"
         self.clear_board()
         self.score = 0
         self.level = 1
@@ -55,6 +58,7 @@ class TetrisGame:
         self.level_label.config(text="Level: 1")
         self.spawn_shape()
         self.update()
+
 
     def clear_board(self):
         self.board = [[0] * WIDTH for _ in range(HEIGHT)]
@@ -194,6 +198,7 @@ class TetrisGame:
             fill="red",
             tags="game_over",
         )
+        self.restart_button.config(state=tk.NORMAL)
 
 
 def main():
